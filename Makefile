@@ -155,7 +155,8 @@ ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in AUTHORS \
-	ChangeLog NEWS README compile install-sh missing
+	COPYING ChangeLog INSTALL NEWS README compile depcomp \
+	install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -239,6 +240,7 @@ PACKAGE_TARNAME = full-package-name
 PACKAGE_URL = 
 PACKAGE_VERSION = VERSION
 PATH_SEPARATOR = :
+RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
@@ -285,7 +287,7 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-SUBDIRS = file
+SUBDIRS = lib file
 DIST_SUBDIRS = $(SUBDIRS)
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

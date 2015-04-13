@@ -1,0 +1,2 @@
+CFLAGS = -I ../include -g -Wall -O2 -D_REENTRANT -D_GNU_SOURCE
+LDADD = ../lib/libapue.a

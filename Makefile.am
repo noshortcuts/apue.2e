@@ -1,2 +1,2 @@
-SUBDIRS = file
+SUBDIRS =  lib file
 DIST_SUBDIRS = $(SUBDIRS)

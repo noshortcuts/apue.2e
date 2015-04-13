@@ -103,60 +103,78 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_access_OBJECTS = access.$(OBJEXT)
-access_OBJECTS = $(am_access_OBJECTS)
+access_SOURCES = access.c
+access_OBJECTS = access.$(OBJEXT)
 access_LDADD = $(LDADD)
-am_cdpwd_OBJECTS = cdpwd.$(OBJEXT)
-cdpwd_OBJECTS = $(am_cdpwd_OBJECTS)
+access_DEPENDENCIES = ../lib/libapue.a
+cdpwd_SOURCES = cdpwd.c
+cdpwd_OBJECTS = cdpwd.$(OBJEXT)
 cdpwd_LDADD = $(LDADD)
-am_changemod_OBJECTS = changemod.$(OBJEXT)
-changemod_OBJECTS = $(am_changemod_OBJECTS)
+cdpwd_DEPENDENCIES = ../lib/libapue.a
+changemod_SOURCES = changemod.c
+changemod_OBJECTS = changemod.$(OBJEXT)
 changemod_LDADD = $(LDADD)
-am_devrdev_OBJECTS = devrdev.$(OBJEXT)
-devrdev_OBJECTS = $(am_devrdev_OBJECTS)
+changemod_DEPENDENCIES = ../lib/libapue.a
+devrdev_SOURCES = devrdev.c
+devrdev_OBJECTS = devrdev.$(OBJEXT)
 devrdev_LDADD = $(LDADD)
-am_fileflags_OBJECTS = fileflags.$(OBJEXT)
-fileflags_OBJECTS = $(am_fileflags_OBJECTS)
+devrdev_DEPENDENCIES = ../lib/libapue.a
+fileflags_SOURCES = fileflags.c
+fileflags_OBJECTS = fileflags.$(OBJEXT)
 fileflags_LDADD = $(LDADD)
-am_filetype_OBJECTS = filetype.$(OBJEXT)
-filetype_OBJECTS = $(am_filetype_OBJECTS)
+fileflags_DEPENDENCIES = ../lib/libapue.a
+filetype_SOURCES = filetype.c
+filetype_OBJECTS = filetype.$(OBJEXT)
 filetype_LDADD = $(LDADD)
-am_ftw4_OBJECTS = ftw4.$(OBJEXT)
-ftw4_OBJECTS = $(am_ftw4_OBJECTS)
+filetype_DEPENDENCIES = ../lib/libapue.a
+ftw4_SOURCES = ftw4.c
+ftw4_OBJECTS = ftw4.$(OBJEXT)
 ftw4_LDADD = $(LDADD)
-am_hello_OBJECTS = hello.$(OBJEXT)
-hello_OBJECTS = $(am_hello_OBJECTS)
+ftw4_DEPENDENCIES = ../lib/libapue.a
+hello_SOURCES = hello.c
+hello_OBJECTS = hello.$(OBJEXT)
 hello_LDADD = $(LDADD)
-am_hole_OBJECTS = hole.$(OBJEXT)
-hole_OBJECTS = $(am_hole_OBJECTS)
+hello_DEPENDENCIES = ../lib/libapue.a
+hole_SOURCES = hole.c
+hole_OBJECTS = hole.$(OBJEXT)
 hole_LDADD = $(LDADD)
-am_longpath_OBJECTS = longpath.$(OBJEXT)
-longpath_OBJECTS = $(am_longpath_OBJECTS)
+hole_DEPENDENCIES = ../lib/libapue.a
+longpath_SOURCES = longpath.c
+longpath_OBJECTS = longpath.$(OBJEXT)
 longpath_LDADD = $(LDADD)
-am_ls1_OBJECTS = ls1.$(OBJEXT)
-ls1_OBJECTS = $(am_ls1_OBJECTS)
+longpath_DEPENDENCIES = ../lib/libapue.a
+ls1_SOURCES = ls1.c
+ls1_OBJECTS = ls1.$(OBJEXT)
 ls1_LDADD = $(LDADD)
-am_mycd_OBJECTS = mycd.$(OBJEXT)
-mycd_OBJECTS = $(am_mycd_OBJECTS)
+ls1_DEPENDENCIES = ../lib/libapue.a
+mycd_SOURCES = mycd.c
+mycd_OBJECTS = mycd.$(OBJEXT)
 mycd_LDADD = $(LDADD)
-am_seek_OBJECTS = seek.$(OBJEXT)
-seek_OBJECTS = $(am_seek_OBJECTS)
+mycd_DEPENDENCIES = ../lib/libapue.a
+seek_SOURCES = seek.c
+seek_OBJECTS = seek.$(OBJEXT)
 seek_LDADD = $(LDADD)
-am_testerror_OBJECTS = testerror.$(OBJEXT)
-testerror_OBJECTS = $(am_testerror_OBJECTS)
+seek_DEPENDENCIES = ../lib/libapue.a
+testerror_SOURCES = testerror.c
+testerror_OBJECTS = testerror.$(OBJEXT)
 testerror_LDADD = $(LDADD)
-am_uidgid_OBJECTS = uidgid.$(OBJEXT)
-uidgid_OBJECTS = $(am_uidgid_OBJECTS)
+testerror_DEPENDENCIES = ../lib/libapue.a
+uidgid_SOURCES = uidgid.c
+uidgid_OBJECTS = uidgid.$(OBJEXT)
 uidgid_LDADD = $(LDADD)
-am_umask_OBJECTS = umask.$(OBJEXT)
-umask_OBJECTS = $(am_umask_OBJECTS)
+uidgid_DEPENDENCIES = ../lib/libapue.a
+umask_SOURCES = umask.c
+umask_OBJECTS = umask.$(OBJEXT)
 umask_LDADD = $(LDADD)
-am_unlink_OBJECTS = unlink.$(OBJEXT)
-unlink_OBJECTS = $(am_unlink_OBJECTS)
+umask_DEPENDENCIES = ../lib/libapue.a
+unlink_SOURCES = unlink.c
+unlink_OBJECTS = unlink.$(OBJEXT)
 unlink_LDADD = $(LDADD)
-am_zap_OBJECTS = zap.$(OBJEXT)
-zap_OBJECTS = $(am_zap_OBJECTS)
+unlink_DEPENDENCIES = ../lib/libapue.a
+zap_SOURCES = zap.c
+zap_OBJECTS = zap.$(OBJEXT)
 zap_LDADD = $(LDADD)
+zap_DEPENDENCIES = ../lib/libapue.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -185,18 +203,12 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(access_SOURCES) $(cdpwd_SOURCES) $(changemod_SOURCES) \
-	$(devrdev_SOURCES) $(fileflags_SOURCES) $(filetype_SOURCES) \
-	$(ftw4_SOURCES) $(hello_SOURCES) $(hole_SOURCES) \
-	$(longpath_SOURCES) $(ls1_SOURCES) $(mycd_SOURCES) \
-	$(seek_SOURCES) $(testerror_SOURCES) $(uidgid_SOURCES) \
-	$(umask_SOURCES) $(unlink_SOURCES) $(zap_SOURCES)
-DIST_SOURCES = $(access_SOURCES) $(cdpwd_SOURCES) $(changemod_SOURCES) \
-	$(devrdev_SOURCES) $(fileflags_SOURCES) $(filetype_SOURCES) \
-	$(ftw4_SOURCES) $(hello_SOURCES) $(hole_SOURCES) \
-	$(longpath_SOURCES) $(ls1_SOURCES) $(mycd_SOURCES) \
-	$(seek_SOURCES) $(testerror_SOURCES) $(uidgid_SOURCES) \
-	$(umask_SOURCES) $(unlink_SOURCES) $(zap_SOURCES)
+SOURCES = access.c cdpwd.c changemod.c devrdev.c fileflags.c \
+	filetype.c ftw4.c hello.c hole.c longpath.c ls1.c mycd.c \
+	seek.c testerror.c uidgid.c umask.c unlink.c zap.c
+DIST_SOURCES = access.c cdpwd.c changemod.c devrdev.c fileflags.c \
+	filetype.c ftw4.c hello.c hole.c longpath.c ls1.c mycd.c \
+	seek.c testerror.c uidgid.c umask.c unlink.c zap.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -221,7 +233,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
+am__DIST_COMMON = $(srcdir)/../Make.defines $(srcdir)/Makefile.in \
+	$(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -232,7 +245,7 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
-CFLAGS = @CFLAGS@
+CFLAGS = -I ../include -g -Wall -O2 -D_REENTRANT -D_GNU_SOURCE
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -264,6 +277,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -310,29 +324,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-cdpwd_SOURCES = cdpwd.c
-access_SOURCES = access.c
-changemod_SOURCES = changemod.c
-devrdev_SOURCES = devrdev.c
-fileflags_SOURCES = fileflags.c
-filetype_SOURCES = filetype.c
-ftw4_SOURCES = ftw4.c
-hello_SOURCES = hello.c
-hole_SOURCES = hole.c
-longpath_SOURCES = longpath.c
-ls1_SOURCES = ls1.c
-mycd_SOURCES = mycd.c
-seek_SOURCES = seek.c
-testerror_SOURCES = testerror.c
-uidgid_SOURCES = uidgid.c
-umask_SOURCES = umask.c
-unlink_SOURCES = unlink.c
-zap_SOURCES = zap.c
+LDADD = ../lib/libapue.a
 all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/../Make.defines $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -352,6 +349,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
+$(srcdir)/../Make.defines $(am__empty):
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
