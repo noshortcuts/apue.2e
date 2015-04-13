@@ -1,0 +1,2 @@
+SUBDIRS = file
+DIST_SUBDIRS = $(SUBDIRS)
