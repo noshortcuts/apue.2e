@@ -86,7 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = lib
+bin_PROGRAMS = mycat$(EXEEXT) fgetsfputs$(EXEEXT) getcputc$(EXEEXT)
+subdir = mycat
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -96,27 +97,20 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-LIBRARIES = $(noinst_LIBRARIES)
-AR = ar
-ARFLAGS = cru
-AM_V_AR = $(am__v_AR_@AM_V@)
-am__v_AR_ = $(am__v_AR_@AM_DEFAULT_V@)
-am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
-libapue_a_AR = $(AR) $(ARFLAGS)
-libapue_a_LIBADD =
-am_libapue_a_OBJECTS = bufargs.$(OBJEXT) cliconn.$(OBJEXT) \
-	clrfl.$(OBJEXT) daemonize.$(OBJEXT) error.$(OBJEXT) \
-	errorlog.$(OBJEXT) lockreg.$(OBJEXT) locktest.$(OBJEXT) \
-	openmax.$(OBJEXT) pathalloc.$(OBJEXT) popen.$(OBJEXT) \
-	prexit.$(OBJEXT) prmask.$(OBJEXT) ptyfork.$(OBJEXT) \
-	ptyopen.$(OBJEXT) readn.$(OBJEXT) recvfd.$(OBJEXT) \
-	senderr.$(OBJEXT) sendfd.$(OBJEXT) servaccept.$(OBJEXT) \
-	servlisten.$(OBJEXT) setfl.$(OBJEXT) signal.$(OBJEXT) \
-	signalintr.$(OBJEXT) sleep.$(OBJEXT) sleepus.$(OBJEXT) \
-	spipe.$(OBJEXT) tellwait.$(OBJEXT) ttymodes.$(OBJEXT) \
-	writen.$(OBJEXT)
-libapue_a_OBJECTS = $(am_libapue_a_OBJECTS)
+am__installdirs = "$(DESTDIR)$(bindir)"
+PROGRAMS = $(bin_PROGRAMS)
+fgetsfputs_SOURCES = fgetsfputs.c
+fgetsfputs_OBJECTS = fgetsfputs.$(OBJEXT)
+fgetsfputs_LDADD = $(LDADD)
+fgetsfputs_DEPENDENCIES = ../lib/libapue.a
+getcputc_SOURCES = getcputc.c
+getcputc_OBJECTS = getcputc.$(OBJEXT)
+getcputc_LDADD = $(LDADD)
+getcputc_DEPENDENCIES = ../lib/libapue.a
+mycat_SOURCES = mycat.c
+mycat_OBJECTS = mycat.$(OBJEXT)
+mycat_LDADD = $(LDADD)
+mycat_DEPENDENCIES = ../lib/libapue.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -145,8 +139,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libapue_a_SOURCES)
-DIST_SOURCES = $(libapue_a_SOURCES)
+SOURCES = fgetsfputs.c getcputc.c mycat.c
+DIST_SOURCES = fgetsfputs.c getcputc.c mycat.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -263,8 +257,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 LDADD = ../lib/libapue.a
-noinst_LIBRARIES = libapue.a
-libapue_a_SOURCES = bufargs.c cliconn.c clrfl.c daemonize.c error.c errorlog.c lockreg.c locktest.c  openmax.c pathalloc.c popen.c prexit.c prmask.c  ptyfork.c ptyopen.c readn.c recvfd.c  senderr.c sendfd.c servaccept.c servlisten.c  setfl.c signal.c signalintr.c  sleep.c sleepus.c spipe.c  tellwait.c ttymodes.c writen.c
 all: all-am
 
 .SUFFIXES:
@@ -278,9 +270,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/../Make.defines $(am__co
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign lib/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign mycat/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign lib/Makefile
+	  $(AUTOMAKE) --foreign mycat/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -299,14 +291,60 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(bindir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(bindir)" || exit 1; \
+	fi; \
+	for p in $$list; do echo "$$p $$p"; done | \
+	sed 's/$(EXEEXT)$$//' | \
+	while read p p1; do if test -f $$p \
+	  ; then echo "$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n;h' \
+	    -e 's|.*|.|' \
+	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+	sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+	    else { print "f", $$3 "/" $$4, $$1; } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	    test -z "$$files" || { \
+	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
+	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	    } \
+	; done
 
-clean-noinstLIBRARIES:
-	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	files=`for p in $$list; do echo "$$p"; done | \
+	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+	      -e 's/$$/$(EXEEXT)/' \
+	`; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(bindir)" && rm -f $$files
 
-libapue.a: $(libapue_a_OBJECTS) $(libapue_a_DEPENDENCIES) $(EXTRA_libapue_a_DEPENDENCIES) 
-	$(AM_V_at)-rm -f libapue.a
-	$(AM_V_AR)$(libapue_a_AR) libapue.a $(libapue_a_OBJECTS) $(libapue_a_LIBADD)
-	$(AM_V_at)$(RANLIB) libapue.a
+clean-binPROGRAMS:
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+
+fgetsfputs$(EXEEXT): $(fgetsfputs_OBJECTS) $(fgetsfputs_DEPENDENCIES) $(EXTRA_fgetsfputs_DEPENDENCIES) 
+	@rm -f fgetsfputs$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(fgetsfputs_OBJECTS) $(fgetsfputs_LDADD) $(LIBS)
+
+getcputc$(EXEEXT): $(getcputc_OBJECTS) $(getcputc_DEPENDENCIES) $(EXTRA_getcputc_DEPENDENCIES) 
+	@rm -f getcputc$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(getcputc_OBJECTS) $(getcputc_LDADD) $(LIBS)
+
+mycat$(EXEEXT): $(mycat_OBJECTS) $(mycat_DEPENDENCIES) $(EXTRA_mycat_DEPENDENCIES) 
+	@rm -f mycat$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(mycat_OBJECTS) $(mycat_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -314,36 +352,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bufargs.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cliconn.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clrfl.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/daemonize.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errorlog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lockreg.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/locktest.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openmax.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pathalloc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/popen.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prexit.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prmask.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ptyfork.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ptyopen.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/readn.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recvfd.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/senderr.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sendfd.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/servaccept.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/servlisten.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/setfl.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signalintr.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sleep.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sleepus.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/spipe.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tellwait.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ttymodes.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/writen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fgetsfputs.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getcputc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mycat.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -443,8 +454,11 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LIBRARIES)
+all-am: Makefile $(PROGRAMS)
 installdirs:
+	for dir in "$(DESTDIR)$(bindir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -477,7 +491,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-noinstLIBRARIES mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -503,7 +517,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am:
+install-exec-am: install-binPROGRAMS
 
 install-html: install-html-am
 
@@ -542,26 +556,26 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-binPROGRAMS
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
-	clean-noinstLIBRARIES cscopelist-am ctags ctags-am distclean \
-	distclean-compile distclean-generic distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am
+.PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
+	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
+	distclean distclean-compile distclean-generic distclean-tags \
+	distdir dvi dvi-am html html-am info info-am install \
+	install-am install-binPROGRAMS install-data install-data-am \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
+	ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS
 
 .PRECIOUS: Makefile
 
-#				 sysconf.c strerror.c 	pathconf.c
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -4652,7 +4652,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile file/Makefile lib/Makefile"
+ac_config_files="$ac_config_files Makefile lib/Makefile mycat/Makefile file/Makefile"
 
 am__api_version='1.15'
 
@@ -6148,8 +6148,9 @@ do
   case $ac_config_target in
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "file/Makefile") CONFIG_FILES="$CONFIG_FILES file/Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
+    "mycat/Makefile") CONFIG_FILES="$CONFIG_FILES mycat/Makefile" ;;
+    "file/Makefile") CONFIG_FILES="$CONFIG_FILES file/Makefile" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

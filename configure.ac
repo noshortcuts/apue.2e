@@ -38,7 +38,8 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([alarm atexit dup2 endpwent ftruncate getcwd gethostname getpass getspnam gettimeofday memset mkdir mkfifo pathconf select socket strchr strdup strerror strncasecmp strrchr utime])
 
 AC_CONFIG_FILES([Makefile
-                 file/Makefile
-				 lib/Makefile])
+				 lib/Makefile
+				 mycat/Makefile
+                 file/Makefile])
 AM_INIT_AUTOMAKE
 AC_OUTPUT
